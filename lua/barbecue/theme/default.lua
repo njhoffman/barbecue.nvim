@@ -8,7 +8,6 @@ local function hl(name)
     __index = function(self, key)
       if key == "bg" then return self.background end
       if key == "fg" then return self.foreground end
-
       return nil
     end,
   })
@@ -19,15 +18,21 @@ end
 ---@alias barbecue.Theme table<string, table>
 ---@type barbecue.Theme
 local M = {
+  winbar = { bg = hl("WinBar").bg, fg = hl("WinBar").fg },
   normal = { bg = hl("Normal").bg, fg = hl("Normal").fg },
 
   ellipsis = { fg = hl("Conceal").fg },
-  separator = { fg = hl("Conceal").fg },
+  separators = { fg = hl("Conceal").fg },
   modified = { fg = hl("String").fg },
 
+  project = { bold = true },
+  project_separators = { fg = hl("Conceal").fg },
   dirname = { fg = hl("Conceal").fg },
+  dirname_separators = { fg = hl("Conceal").fg },
   basename = { bold = true },
+  basename_separators = { fg = hl("Conceal").fg },
   context = {},
+  context_separators = { fg = hl("Conceal").fg },
 
   context_file = { fg = hl("Structure").fg },
   context_module = { fg = hl("Structure").fg },

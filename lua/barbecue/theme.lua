@@ -9,15 +9,21 @@ local current_theme
 
 ---Mapping of the used highlight groups throughout the plugin.
 M.highlights = {
+  winbar = "barbecue_winbar",
   normal = "barbecue_normal",
 
   ellipsis = "barbecue_ellipsis",
-  separator = "barbecue_separator",
+  separators = "barbecue_separators",
   modified = "barbecue_modified",
 
+  project = "barbecue_project",
+  project_separators = "barbecue_project_separators",
   dirname = "barbecue_dirname",
+  dirname_separators = "barbecue_dirname_separators",
   basename = "barbecue_basename",
+  basename_separators = "barbecue_basename_separators",
   context = "barbecue_context",
+  context_separators = "barbecue_context_separators",
 
   context_file = "barbecue_context_file",
   context_module = "barbecue_context_module",
@@ -59,42 +65,15 @@ local function get_theme(name)
 
   ---@type string[]
   local found_files = {}
-  utils.tbl_merge(
-    found_files,
-    vim.api.nvim_get_runtime_file(
-      utils.path_join("lua", "barbecue", "theme", string.format("%s.lua", name)),
-      true
-    ),
-    vim.api.nvim_get_runtime_file(
-      utils.path_join("lua", "barbecue", "theme", name, "init.lua"),
-      true
-    )
-  )
+  utils.tbl_merge(found_files, vim.api.nvim_get_runtime_file(utils.path_join("lua", "barbecue", "theme", string.format("%s.lua", name)), true), vim.api.nvim_get_runtime_file(utils.path_join("lua", "barbecue", "theme", name, "init.lua"), true))
 
-  if #found_files == 0 then
-    return dofile(
-      vim.api.nvim_get_runtime_file(
-        utils.path_join("lua", "barbecue", "theme", "default.lua"),
-        false
-      )[1]
-    )
-  end
+  if #found_files == 0 then return dofile(vim.api.nvim_get_runtime_file(utils.path_join("lua", "barbecue", "theme", "default.lua"), false)[1]) end
 
   local config_path = vim.fn.stdpath("config")
-  table.sort(
-    found_files,
-    function(a, b)
-      return vim.startswith(a, config_path)
-        or not vim.startswith(b, config_path)
-    end
-  )
+  table.sort(found_files, function(a, b) return vim.startswith(a, config_path) or not vim.startswith(b, config_path) end)
 
   for _, found_file in ipairs(found_files) do
-    if
-      not found_file:find(utils.path_join("barbecue.nvim", "lua", "barbecue"))
-    then
-      return dofile(found_file)
-    end
+    if not found_file:find(utils.path_join("barbecue.nvim", "lua", "barbecue")) then return dofile(found_file) end
   end
 
   return dofile(found_files[1])
@@ -129,19 +108,11 @@ function M.load()
   current_theme = theme
 
   for key, name in pairs(M.highlights) do
-    vim.api.nvim_set_hl(
-      0,
-      name,
-      vim.tbl_extend("force", theme.normal, theme[key])
-    )
+    vim.api.nvim_set_hl(0, name, vim.tbl_extend("force", theme.normal, theme[key]))
   end
 
   for _, icon in pairs(file_icons) do
-    vim.api.nvim_set_hl(
-      0,
-      icon.highlight,
-      vim.tbl_extend("force", theme.normal, { foreground = icon.color })
-    )
+    vim.api.nvim_set_hl(0, icon.highlight, vim.tbl_extend("force", theme.normal, { foreground = icon.color }))
   end
 end
 
@@ -171,15 +142,7 @@ function M.get_file_icon(filename, filetype)
       color = icon.color,
     }
 
-    vim.api.nvim_set_hl(
-      0,
-      highlight,
-      vim.tbl_extend(
-        "force",
-        current_theme ~= nil and current_theme.normal or {},
-        { foreground = icon.color }
-      )
-    )
+    vim.api.nvim_set_hl(0, highlight, vim.tbl_extend("force", current_theme ~= nil and current_theme.normal or {}, { foreground = icon.color }))
   end
 
   return {

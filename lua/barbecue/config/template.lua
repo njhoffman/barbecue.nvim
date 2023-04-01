@@ -36,33 +36,57 @@ local M = {
     basename = "",
   },
 
-  ---Whether to display path to file.
-  ---
-  ---@type boolean
-  show_dirname = true,
+  project = {
+    ---Whether to display project section
+    ---@type boolean
+    show = true,
 
-  ---Whether to display file name.
-  ---
-  ---@type boolean
-  show_basename = true,
+    ---Which side of the winbar to align basename on
+    align = "left",
+  },
 
-  ---Whether to replace file icon with the modified symbol when buffer is
-  ---modified.
-  ---
-  ---@type boolean
-  show_modified = false,
+  basename = {
+    ---Whether to display file name.
+    ---
+    ---@type boolean
+    show = true,
 
-  ---Get modified status of file.
-  ---
-  ---NOTE: This can be used to get file modified status from SCM (e.g. git)
-  ---
-  ---@type fun(bufnr: number): boolean
-  modified = function(bufnr) return vim.bo[bufnr].modified end,
+    ---Get modified status of file.
+    ---NOTE: This can be used to get file modified status from SCM (e.g. git)
+    ---@type fun(bufnr: number): boolean
+    modified = function(bufnr) return vim.bo[bufnr].modified end,
 
-  ---Whether to show/use navic in the winbar.
-  ---
-  ---@type boolean
-  show_navic = true,
+    ---Whether to replace file icon with the modified symbol when buffer is
+    ---modified.
+    ---
+    ---@type boolean
+    show_modified = true,
+    ---Which side of the winbar to align basename on
+    ---
+    ---@type string
+    align = "left",
+  },
+
+  dirname = {
+    ---Whether to display path to file.
+    ---
+    ---@type boolean
+    show = true,
+    ---Which side of the winbar to align context on
+    ---
+    ---@type string
+    align = "left",
+  },
+  context = {
+    ---Whether to show/use navic in the winbar.
+    ---
+    ---@type boolean
+    show = true,
+    ---Which side of the winbar to align context on
+    ---
+    ---@type string
+    align = "left",
+  },
 
   ---Get leading custom section contents.
   ---
@@ -110,10 +134,10 @@ local M = {
     ---@type string
     ellipsis = "…",
 
-    ---Entry separator.
+    ---Entry separators.
     ---
-    ---@type string
-    separator = "",
+    ---@type string[]
+    separators = { "<", "" },
   },
 
   ---@alias barbecue.Config.kinds

@@ -12,25 +12,22 @@ local M = {}
 ---@param bufnr number Buffer to extract information from.
 ---@return barbecue.Entry[]
 function M.dirname(bufnr)
-  if not config.user.show_dirname then return {} end
+  if not config.user.dirname.show then return {} end
 
   local filename = vim.api.nvim_buf_get_name(bufnr)
-  local dirname =
-    vim.fn.fnamemodify(filename, config.user.modifiers.dirname .. ":h")
+  local dirname = vim.fn.fnamemodify(filename, config.user.modifiers.dirname .. ":h")
 
   ---@type barbecue.Entry[]
   local entries = {}
 
   if dirname == "." then return {} end
-  if dirname:sub(1, 1) == "/" then
-    table.insert(
-      entries,
-      Entry.new({
-        "/",
-        highlight = theme.highlights.dirname,
-      })
-    )
-  end
+  if dirname:sub(1, 1) == "/" then table.insert(
+    entries,
+    Entry.new({
+      "/",
+      highlight = theme.highlights.dirname,
+    })
+  ) end
 
   local protocol_start_index = dirname:find("://")
   if protocol_start_index ~= nil then
@@ -66,14 +63,13 @@ end
 ---@param bufnr number Buffer to extract information from.
 ---@return barbecue.Entry|nil
 function M.basename(winnr, bufnr)
-  if not config.user.show_basename then return nil end
+  if not config.user.basename.show then return nil end
 
   local filename = vim.api.nvim_buf_get_name(bufnr)
-  local basename =
-    vim.fn.fnamemodify(filename, config.user.modifiers.basename .. ":t")
+  local basename = vim.fn.fnamemodify(filename, config.user.modifiers.basename .. ":t")
 
   local icon
-  if config.user.modified(bufnr) and config.user.show_modified then
+  if config.user.basename.modified(bufnr) and config.user.basename.show_modified then
     icon = {
       config.user.symbols.modified,
       highlight = theme.highlights.modified,
@@ -160,9 +156,7 @@ local kind_to_highlight = {
 local function get_kind_icon(kind)
   local type = kind_to_type[kind]
   local highlight = kind_to_highlight[kind]
-  if type == nil or highlight == nil or config.user.kinds == false then
-    return nil
-  end
+  if type == nil or highlight == nil or config.user.kinds == false then return nil end
 
   return {
     config.user.kinds[kind_to_type[kind]],
@@ -176,30 +170,25 @@ end
 ---@param bufnr number Buffer to extract information from.
 ---@return barbecue.Entry[]
 function M.context(winnr, bufnr)
-  if not config.user.show_navic then return {} end
+  if not config.user.context.show then return {} end
   if not navic.is_available() then return {} end
 
   local nestings = navic.get_data(bufnr)
   if nestings == nil then return {} end
 
-  return vim.tbl_map(
-    function(nesting)
-      return Entry.new(
-        {
-          nesting.name,
-          highlight = config.user.context_follow_icon_color
-              and theme.highlights[kind_to_highlight[nesting.kind]]
-            or theme.highlights.context,
-        },
-        get_kind_icon(nesting.kind),
-        {
-          win = winnr,
-          pos = { nesting.scope.start.line, nesting.scope.start.character },
-        }
-      )
-    end,
-    nestings
-  )
+  return vim.tbl_map(function(nesting)
+    return Entry.new(
+      {
+        nesting.name,
+        highlight = config.user.context.follow_icon_color and theme.highlights[kind_to_highlight[nesting.kind]] or theme.highlights.context,
+      },
+      get_kind_icon(nesting.kind),
+      {
+        win = winnr,
+        pos = { nesting.scope.start.line, nesting.scope.start.character },
+      }
+    )
+  end, nestings)
 end
 
 return M
