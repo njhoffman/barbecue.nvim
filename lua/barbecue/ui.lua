@@ -63,17 +63,36 @@ local function extract_custom_section(winnr, custom_section)
   local content = ""
 
   if type(custom_section) == "string" then
+<<<<<<< HEAD
     length = vim.api.nvim_eval_statusline(custom_section, {
       use_winbar = true,
       winid = winnr,
     }).width
+||||||| parent of 59f9656 (fix(custom_section): evaluate string to calculate length precisely)
+    length = utils.str_len(custom_section)
+=======
+    length = utils.str_len(vim.api.nvim_eval_statusline(custom_section, {
+      use_winbar = true,
+      winid = winnr,
+    }).str)
+>>>>>>> 59f9656 (fix(custom_section): evaluate string to calculate length precisely)
     content = custom_section
   elseif type(custom_section) == "table" then
     for _, part in ipairs(custom_section) do
+<<<<<<< HEAD
       length = length + vim.api.nvim_eval_statusline(part[1], {
         use_winbar = true,
         winid = winnr,
       }).width
+||||||| parent of 59f9656 (fix(custom_section): evaluate string to calculate length precisely)
+      length = length + utils.str_len(part[1])
+=======
+      length = length
+        + utils.str_len(vim.api.nvim_eval_statusline(part[1], {
+          use_winbar = true,
+          winid = winnr,
+        }).str)
+>>>>>>> 59f9656 (fix(custom_section): evaluate string to calculate length precisely)
 
       if part[2] ~= nil then content = content .. string.format("%%#%s#", part[2]) end
       content = content .. part[1]
@@ -159,9 +178,34 @@ function M.update(winnr)
   vim.schedule(function()
     if not vim.api.nvim_buf_is_valid(bufnr) or not vim.api.nvim_win_is_valid(winnr) or bufnr ~= vim.api.nvim_win_get_buf(winnr) then return end
 
+<<<<<<< HEAD
     local lead_custom_section, lead_custom_section_length = extract_custom_section(winnr, config.user.lead_custom_section(bufnr, winnr))
     local custom_section, custom_section_length = extract_custom_section(winnr, config.user.custom_section(bufnr, winnr))
     local entries = create_entries(winnr, bufnr, lead_custom_section_length + custom_section_length)
+||||||| parent of 59f9656 (fix(custom_section): evaluate string to calculate length precisely)
+    local lead_custom_section, lead_custom_section_length =
+      extract_custom_section(config.user.lead_custom_section(bufnr, winnr))
+    local custom_section, custom_section_length =
+      extract_custom_section(config.user.custom_section(bufnr, winnr))
+    local entries = create_entries(
+      winnr,
+      bufnr,
+      lead_custom_section_length + custom_section_length
+    )
+=======
+    local lead_custom_section, lead_custom_section_length =
+      extract_custom_section(
+        winnr,
+        config.user.lead_custom_section(bufnr, winnr)
+      )
+    local custom_section, custom_section_length =
+      extract_custom_section(winnr, config.user.custom_section(bufnr, winnr))
+    local entries = create_entries(
+      winnr,
+      bufnr,
+      lead_custom_section_length + custom_section_length
+    )
+>>>>>>> 59f9656 (fix(custom_section): evaluate string to calculate length precisely)
     if entries == nil then return end
 
     state:save(entries)
