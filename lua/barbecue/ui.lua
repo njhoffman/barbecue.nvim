@@ -29,13 +29,29 @@ local function truncate_entries(entries, length, max_length, basename_position)
 
     length = length - entries[i]:len()
     if has_ellipsis then
+<<<<<<< HEAD
       if i < #entries then length = length - (vim.api.nvim_eval_statusline(config.user.symbols.separator, {
         use_winbar = true,
       }).width + 2) end
+||||||| parent of 5975a2d (fix(utils): remove `str_len` and use `nvim_eval_statusline` instead)
+      if i < #entries then
+        length = length - (utils.str_len(config.user.symbols.separator) + 2)
+      end
+=======
+      if i < #entries then
+        length = length
+          - (
+            vim.api.nvim_eval_statusline(config.user.symbols.separator, {
+              use_winbar = true,
+            }).width + 2
+          )
+      end
+>>>>>>> 5975a2d (fix(utils): remove `str_len` and use `nvim_eval_statusline` instead)
 
       table.remove(entries, i)
       n = n + 1
     else
+<<<<<<< HEAD
       length = length + vim.api.nvim_eval_statusline(config.user.symbols.ellipsis, {
         use_winbar = true,
       }).width
@@ -43,6 +59,16 @@ local function truncate_entries(entries, length, max_length, basename_position)
         config.user.symbols.ellipsis,
         highlight = theme.highlights.ellipsis,
       })
+||||||| parent of 5975a2d (fix(utils): remove `str_len` and use `nvim_eval_statusline` instead)
+      length = length + utils.str_len(config.user.symbols.ellipsis)
+      entries[i] = ENTRY_ELLIPSIS
+=======
+      length = length
+        + vim.api.nvim_eval_statusline(config.user.symbols.ellipsis, {
+          use_winbar = true,
+        }).width
+      entries[i] = ENTRY_ELLIPSIS
+>>>>>>> 5975a2d (fix(utils): remove `str_len` and use `nvim_eval_statusline` instead)
 
       has_ellipsis = true
       i = i + 1 -- manually increment i when not removing anything from entries
@@ -64,6 +90,7 @@ local function extract_custom_section(winnr, custom_section)
 
   if type(custom_section) == "string" then
 <<<<<<< HEAD
+<<<<<<< HEAD
     length = vim.api.nvim_eval_statusline(custom_section, {
       use_winbar = true,
       winid = winnr,
@@ -72,10 +99,21 @@ local function extract_custom_section(winnr, custom_section)
     length = utils.str_len(custom_section)
 =======
     length = utils.str_len(vim.api.nvim_eval_statusline(custom_section, {
+||||||| parent of 5975a2d (fix(utils): remove `str_len` and use `nvim_eval_statusline` instead)
+    length = utils.str_len(vim.api.nvim_eval_statusline(custom_section, {
+=======
+    length = vim.api.nvim_eval_statusline(custom_section, {
+>>>>>>> 5975a2d (fix(utils): remove `str_len` and use `nvim_eval_statusline` instead)
       use_winbar = true,
       winid = winnr,
+<<<<<<< HEAD
     }).str)
 >>>>>>> 59f9656 (fix(custom_section): evaluate string to calculate length precisely)
+||||||| parent of 5975a2d (fix(utils): remove `str_len` and use `nvim_eval_statusline` instead)
+    }).str)
+=======
+    }).width
+>>>>>>> 5975a2d (fix(utils): remove `str_len` and use `nvim_eval_statusline` instead)
     content = custom_section
   elseif type(custom_section) == "table" then
     for _, part in ipairs(custom_section) do
@@ -88,11 +126,17 @@ local function extract_custom_section(winnr, custom_section)
       length = length + utils.str_len(part[1])
 =======
       length = length
-        + utils.str_len(vim.api.nvim_eval_statusline(part[1], {
+        + vim.api.nvim_eval_statusline(part[1], {
           use_winbar = true,
           winid = winnr,
+<<<<<<< HEAD
         }).str)
 >>>>>>> 59f9656 (fix(custom_section): evaluate string to calculate length precisely)
+||||||| parent of 5975a2d (fix(utils): remove `str_len` and use `nvim_eval_statusline` instead)
+        }).str)
+=======
+        }).width
+>>>>>>> 5975a2d (fix(utils): remove `str_len` and use `nvim_eval_statusline` instead)
 
       if part[2] ~= nil then content = content .. string.format("%%#%s#", part[2]) end
       content = content .. part[1]
@@ -123,10 +167,25 @@ local function create_entries(winnr, bufnr, extra_length)
   local length = extra_length
   for i, entry in ipairs(entries) do
     length = length + entry:len()
+<<<<<<< HEAD
     if i < #entries then length = length + vim.api.nvim_eval_statusline(config.user.symbols.separator, {
       use_winbar = true,
       winid = winnr,
     }).width + 2 end
+||||||| parent of 5975a2d (fix(utils): remove `str_len` and use `nvim_eval_statusline` instead)
+    if i < #entries then
+      length = length + utils.str_len(config.user.symbols.separator) + 2
+    end
+=======
+    if i < #entries then
+      length = length
+        + vim.api.nvim_eval_statusline(config.user.symbols.separator, {
+          use_winbar = true,
+          winid = winnr,
+        }).width
+        + 2
+    end
+>>>>>>> 5975a2d (fix(utils): remove `str_len` and use `nvim_eval_statusline` instead)
   end
   truncate_entries(entries, length, vim.api.nvim_win_get_width(winnr), #dirname + 1)
 
