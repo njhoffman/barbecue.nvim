@@ -41,6 +41,7 @@ local function truncate_entries(entries, length, max_length, basename_position)
       table.remove(entries, i)
       n = n + 1
     else
+<<<<<<< HEAD
       length = length
         + vim.api.nvim_eval_statusline(config.user.symbols.ellipsis, {
           use_winbar = true,
@@ -49,6 +50,16 @@ local function truncate_entries(entries, length, max_length, basename_position)
         config.user.symbols.ellipsis,
         highlight = theme.highlights.ellipsis,
       })
+||||||| parent of 5975a2d (fix(utils): remove `str_len` and use `nvim_eval_statusline` instead)
+      length = length + utils.str_len(config.user.symbols.ellipsis)
+      entries[i] = ENTRY_ELLIPSIS
+=======
+      length = length
+        + vim.api.nvim_eval_statusline(config.user.symbols.ellipsis, {
+          use_winbar = true,
+        }).width
+      entries[i] = ENTRY_ELLIPSIS
+>>>>>>> 5975a2d (fix(utils): remove `str_len` and use `nvim_eval_statusline` instead)
 
       has_ellipsis = true
       i = i + 1 -- manually increment i when not removing anything from entries
