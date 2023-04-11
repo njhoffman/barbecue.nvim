@@ -397,6 +397,7 @@ function M.update(winnr)
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   if
     not vim.tbl_contains(config.user.include_buftypes, vim.bo[bufnr].buftype)
     or vim.tbl_contains(config.user.exclude_filetypes, vim.bo[bufnr].filetype)
@@ -419,8 +420,34 @@ function M.update(winnr)
 ||||||| parent of 9687462 (merged)
   if not vim.tbl_contains(config.user.include_buftypes, vim.bo[bufnr].buftype) or vim.tbl_contains(config.user.exclude_filetypes, vim.bo[bufnr].filetype) or vim.api.nvim_win_get_config(winnr).relative ~= "" then
 =======
+||||||| parent of ef6b904 (fix(exclusion): exclude incapable buffers when dirname, basename are off (#78))
+=======
+<<<<<<< HEAD
+>>>>>>> ef6b904 (fix(exclusion): exclude incapable buffers when dirname, basename are off (#78))
   if not vim.tbl_contains(config.user.include_buftypes, vim.bo[bufnr].buftype) or vim.tbl_contains(config.user.exclude_filetypes, vim.bo[bufnr].filetype) or vim.api.nvim_win_get_config(winnr).relative ~= "" or (not config.user.show_dirname and not config.user.show_basename and vim.b[bufnr].navic_client_id == nil) then
+<<<<<<< HEAD
 >>>>>>> 9687462 (merged)
+||||||| parent of ef6b904 (fix(exclusion): exclude incapable buffers when dirname, basename are off (#78))
+=======
+||||||| parent of e1b18d2 (fix(exclusion): exclude incapable buffers when dirname, basename are off (#78))
+  if
+    not vim.tbl_contains(config.user.include_buftypes, vim.bo[bufnr].buftype)
+    or vim.tbl_contains(config.user.exclude_filetypes, vim.bo[bufnr].filetype)
+    or vim.api.nvim_win_get_config(winnr).relative ~= ""
+  then
+=======
+  if
+    not vim.tbl_contains(config.user.include_buftypes, vim.bo[bufnr].buftype)
+    or vim.tbl_contains(config.user.exclude_filetypes, vim.bo[bufnr].filetype)
+    or vim.api.nvim_win_get_config(winnr).relative ~= ""
+    or (
+      not config.user.show_dirname
+      and not config.user.show_basename
+      and vim.b[bufnr].navic_client_id == nil
+    )
+  then
+>>>>>>> e1b18d2 (fix(exclusion): exclude incapable buffers when dirname, basename are off (#78))
+>>>>>>> ef6b904 (fix(exclusion): exclude incapable buffers when dirname, basename are off (#78))
     local last_winbar = state:get_last_winbar()
     if last_winbar ~= nil then
       -- HACK: this exists because of Vim:E36 error. See neovim/neovim#19464
