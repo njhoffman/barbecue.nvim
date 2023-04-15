@@ -67,8 +67,17 @@ local function truncate_entries(entries, length, max_length, basename_position)
         + vim.api.nvim_eval_statusline(config.user.symbols.ellipsis, {
           use_winbar = true,
         }).width
+<<<<<<< HEAD
       entries[i] = ENTRY_ELLIPSIS
 >>>>>>> 5975a2d (fix(utils): remove `str_len` and use `nvim_eval_statusline` instead)
+||||||| parent of ac2272e (fix(ui): create ellipsis entry every time to respect user config)
+      entries[i] = ENTRY_ELLIPSIS
+=======
+      entries[i] = Entry.new({
+        config.user.symbols.ellipsis,
+        highlight = theme.highlights.ellipsis,
+      })
+>>>>>>> ac2272e (fix(ui): create ellipsis entry every time to respect user config)
 
       has_ellipsis = true
       i = i + 1 -- manually increment i when not removing anything from entries
