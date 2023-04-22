@@ -30,6 +30,7 @@ local function truncate_entries(entries, length, max_length, basename_position)
     length = length - entries[i]:len()
     if has_ellipsis then
 <<<<<<< HEAD
+<<<<<<< HEAD
       if i < #entries then
         length = length
           - (
@@ -45,6 +46,13 @@ local function truncate_entries(entries, length, max_length, basename_position)
 =======
       if i < #entries then length = length - (utils.str_len(config.user.symbols.separators[2]) + 2) end
 >>>>>>> f8ca86f (refactoring and adding options)
+||||||| parent of 9687462 (merged)
+      if i < #entries then length = length - (utils.str_len(config.user.symbols.separators[2]) + 2) end
+=======
+      if i < #entries then length = length - (vim.api.nvim_eval_statusline(config.user.symbols.separators[2], {
+        use_winbar = true,
+      }).width + 2) end
+>>>>>>> 9687462 (merged)
 
       table.remove(entries, i)
       n = n + 1
@@ -58,6 +66,7 @@ local function truncate_entries(entries, length, max_length, basename_position)
         config.user.symbols.ellipsis,
         highlight = theme.highlights.ellipsis,
       })
+<<<<<<< HEAD
 ||||||| parent of 5975a2d (fix(utils): remove `str_len` and use `nvim_eval_statusline` instead)
       length = length + utils.str_len(config.user.symbols.ellipsis)
       entries[i] = ENTRY_ELLIPSIS
@@ -77,6 +86,21 @@ local function truncate_entries(entries, length, max_length, basename_position)
         highlight = theme.highlights.ellipsis,
       })
 >>>>>>> ac2272e (fix(ui): create ellipsis entry every time to respect user config)
+||||||| parent of 89817d7 (merged)
+=======
+||||||| parent of 9687462 (merged)
+      length = length + utils.str_len(config.user.symbols.ellipsis)
+      entries[i] = ENTRY_ELLIPSIS
+=======
+      length = length + vim.api.nvim_eval_statusline(config.user.symbols.ellipsis, {
+        use_winbar = true,
+      }).width
+      entries[i] = Entry.new({
+        config.user.symbols.ellipsis,
+        highlight = theme.highlights.ellipsis,
+      })
+>>>>>>> 9687462 (merged)
+>>>>>>> 89817d7 (merged)
 
       has_ellipsis = true
       i = i + 1 -- manually increment i when not removing anything from entries
@@ -104,11 +128,20 @@ local function extract_custom_section(winnr, custom_section)
     content = custom_section
   elseif type(custom_section) == "table" then
     for _, part in ipairs(custom_section) do
+<<<<<<< HEAD
       length = length
         + vim.api.nvim_eval_statusline(part[1], {
           use_winbar = true,
           winid = winnr,
         }).width
+||||||| parent of 9687462 (merged)
+      length = length + utils.str_len(part[1])
+=======
+      length = length + vim.api.nvim_eval_statusline(part[1], {
+        use_winbar = true,
+        winid = winnr,
+      }).width
+>>>>>>> 9687462 (merged)
 
       if part[2] ~= nil then content = content .. string.format("%%#%s#", part[2]) end
       content = content .. part[1]
@@ -140,6 +173,7 @@ local function create_entries(winnr, bufnr, extra_length)
   for i, entry in ipairs(entries) do
     length = length + entry:len()
 <<<<<<< HEAD
+<<<<<<< HEAD
     if i < #entries then
       length = length
         + vim.api.nvim_eval_statusline(config.user.symbols.separator, {
@@ -155,6 +189,14 @@ local function create_entries(winnr, bufnr, extra_length)
 =======
     if i < #entries then length = length + utils.str_len(config.user.symbols.separators[2]) + 2 end
 >>>>>>> f8ca86f (refactoring and adding options)
+||||||| parent of 9687462 (merged)
+    if i < #entries then length = length + utils.str_len(config.user.symbols.separators[2]) + 2 end
+=======
+    if i < #entries then length = length + vim.api.nvim_eval_statusline(config.user.symbols.separators[2], {
+      use_winbar = true,
+      winid = winnr,
+    }).width + 2 end
+>>>>>>> 9687462 (merged)
   end
   truncate_entries(entries, length, vim.api.nvim_win_get_width(winnr), #dirname + 1)
 
@@ -171,7 +213,7 @@ local function build_winbar(entries, lead_custom_section, custom_section)
   local entries_str = ""
   for i, entry in ipairs(entries) do
     entries_str = entries_str .. entry:to_string()
-    if i < #entries then entries_str = entries_str .. string.format("%%#%s# %%#%s#", theme.highlights.normal, theme.highlights.separators) .. config.user.symbols.separators[2] .. string.format("%%#%s# ", theme.highlights.normal) end
+    if i < #entries then entries_str = entries_str .. string.format("%%#%s# %%#%s#", theme.highlights.normal, theme.highlights.separator) .. config.user.symbols.separators[2] .. string.format("%%#%s# ", theme.highlights.normal) end
   end
 
   return string.format("%%#%s#%s%s%%#%s#%%=%%#%s#%s", theme.highlights.normal, lead_custom_section, entries_str, theme.highlights.normal, theme.highlights.normal, custom_section)
@@ -187,6 +229,7 @@ function M.update(winnr)
   local bufnr = vim.api.nvim_win_get_buf(winnr)
   local state = State.new(winnr)
 
+<<<<<<< HEAD
 <<<<<<< HEAD
   if
     not vim.tbl_contains(config.user.include_buftypes, vim.bo[bufnr].buftype)
@@ -207,6 +250,11 @@ function M.update(winnr)
 =======
   if not vim.tbl_contains(config.user.include_buftypes, vim.bo[bufnr].buftype) or vim.tbl_contains(config.user.exclude_filetypes, vim.bo[bufnr].filetype) or vim.api.nvim_win_get_config(winnr).relative ~= "" then
 >>>>>>> f8ca86f (refactoring and adding options)
+||||||| parent of 9687462 (merged)
+  if not vim.tbl_contains(config.user.include_buftypes, vim.bo[bufnr].buftype) or vim.tbl_contains(config.user.exclude_filetypes, vim.bo[bufnr].filetype) or vim.api.nvim_win_get_config(winnr).relative ~= "" then
+=======
+  if not vim.tbl_contains(config.user.include_buftypes, vim.bo[bufnr].buftype) or vim.tbl_contains(config.user.exclude_filetypes, vim.bo[bufnr].filetype) or vim.api.nvim_win_get_config(winnr).relative ~= "" or (not config.user.show_dirname and not config.user.show_basename and vim.b[bufnr].navic_client_id == nil) then
+>>>>>>> 9687462 (merged)
     local last_winbar = state:get_last_winbar()
     if last_winbar ~= nil then
       -- HACK: this exists because of Vim:E36 error. See neovim/neovim#19464
@@ -225,6 +273,7 @@ function M.update(winnr)
   vim.schedule(function()
     if not vim.api.nvim_buf_is_valid(bufnr) or not vim.api.nvim_win_is_valid(winnr) or bufnr ~= vim.api.nvim_win_get_buf(winnr) then return end
 
+<<<<<<< HEAD
 <<<<<<< HEAD
     local lead_custom_section, lead_custom_section_length =
       extract_custom_section(
@@ -251,6 +300,13 @@ function M.update(winnr)
 =======
     local lead_custom_section, lead_custom_section_length = extract_custom_section(config.user.lead_custom_section(bufnr, winnr))
     local custom_section, custom_section_length = extract_custom_section(config.user.custom_section(bufnr, winnr))
+||||||| parent of 9687462 (merged)
+    local lead_custom_section, lead_custom_section_length = extract_custom_section(config.user.lead_custom_section(bufnr, winnr))
+    local custom_section, custom_section_length = extract_custom_section(config.user.custom_section(bufnr, winnr))
+=======
+    local lead_custom_section, lead_custom_section_length = extract_custom_section(winnr, config.user.lead_custom_section(bufnr, winnr))
+    local custom_section, custom_section_length = extract_custom_section(winnr, config.user.custom_section(bufnr, winnr))
+>>>>>>> 9687462 (merged)
     local entries = create_entries(winnr, bufnr, lead_custom_section_length + custom_section_length)
 >>>>>>> f8ca86f (refactoring and adding options)
     if entries == nil then return end
