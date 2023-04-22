@@ -31,6 +31,7 @@ local function truncate_entries(entries, length, max_length, basename_position)
     if has_ellipsis then
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
       if i < #entries then
         length = length
           - (
@@ -50,6 +51,11 @@ local function truncate_entries(entries, length, max_length, basename_position)
       if i < #entries then length = length - (utils.str_len(config.user.symbols.separators[2]) + 2) end
 =======
       if i < #entries then length = length - (vim.api.nvim_eval_statusline(config.user.symbols.separators[2], {
+||||||| parent of 4a15252 (merged)
+      if i < #entries then length = length - (vim.api.nvim_eval_statusline(config.user.symbols.separators[2], {
+=======
+      if i < #entries then length = length - (vim.api.nvim_eval_statusline(config.user.symbols.separator, {
+>>>>>>> 4a15252 (merged)
         use_winbar = true,
       }).width + 2) end
 >>>>>>> 9687462 (merged)
@@ -121,22 +127,14 @@ local function extract_custom_section(winnr, custom_section)
   local content = ""
 
   if type(custom_section) == "string" then
-<<<<<<< HEAD
     length = vim.api.nvim_eval_statusline(custom_section, {
       use_winbar = true,
       winid = winnr,
     }).width
-||||||| parent of 59f9656 (fix(custom_section): evaluate string to calculate length precisely)
-    length = utils.str_len(custom_section)
-=======
-    length = utils.str_len(vim.api.nvim_eval_statusline(custom_section, {
-      use_winbar = true,
-      winid = winnr,
-    }).str)
->>>>>>> 59f9656 (fix(custom_section): evaluate string to calculate length precisely)
     content = custom_section
   elseif type(custom_section) == "table" then
     for _, part in ipairs(custom_section) do
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
       length = length
@@ -151,10 +149,15 @@ local function extract_custom_section(winnr, custom_section)
 =======
 <<<<<<< HEAD
 >>>>>>> fcf6dc0 (fix(custom_section): evaluate string to calculate length precisely)
+||||||| parent of 4a15252 (merged)
+<<<<<<< HEAD
+=======
+>>>>>>> 4a15252 (merged)
       length = length + vim.api.nvim_eval_statusline(part[1], {
         use_winbar = true,
         winid = winnr,
       }).width
+<<<<<<< HEAD
 <<<<<<< HEAD
 >>>>>>> 9687462 (merged)
 ||||||| parent of fcf6dc0 (fix(custom_section): evaluate string to calculate length precisely)
@@ -169,6 +172,18 @@ local function extract_custom_section(winnr, custom_section)
         }).str)
 >>>>>>> 59f9656 (fix(custom_section): evaluate string to calculate length precisely)
 >>>>>>> fcf6dc0 (fix(custom_section): evaluate string to calculate length precisely)
+||||||| parent of 4a15252 (merged)
+||||||| parent of 59f9656 (fix(custom_section): evaluate string to calculate length precisely)
+      length = length + utils.str_len(part[1])
+=======
+      length = length
+        + utils.str_len(vim.api.nvim_eval_statusline(part[1], {
+          use_winbar = true,
+          winid = winnr,
+        }).str)
+>>>>>>> 59f9656 (fix(custom_section): evaluate string to calculate length precisely)
+=======
+>>>>>>> 4a15252 (merged)
 
       if part[2] ~= nil then content = content .. string.format("%%#%s#", part[2]) end
       content = content .. part[1]
@@ -201,6 +216,7 @@ local function create_entries(winnr, bufnr, extra_length)
     length = length + entry:len()
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     if i < #entries then
       length = length
         + vim.api.nvim_eval_statusline(config.user.symbols.separator, {
@@ -220,6 +236,11 @@ local function create_entries(winnr, bufnr, extra_length)
     if i < #entries then length = length + utils.str_len(config.user.symbols.separators[2]) + 2 end
 =======
     if i < #entries then length = length + vim.api.nvim_eval_statusline(config.user.symbols.separators[2], {
+||||||| parent of 4a15252 (merged)
+    if i < #entries then length = length + vim.api.nvim_eval_statusline(config.user.symbols.separators[2], {
+=======
+    if i < #entries then length = length + vim.api.nvim_eval_statusline(config.user.symbols.separator, {
+>>>>>>> 4a15252 (merged)
       use_winbar = true,
       winid = winnr,
     }).width + 2 end
@@ -240,7 +261,7 @@ local function build_winbar(entries, lead_custom_section, custom_section)
   local entries_str = ""
   for i, entry in ipairs(entries) do
     entries_str = entries_str .. entry:to_string()
-    if i < #entries then entries_str = entries_str .. string.format("%%#%s# %%#%s#", theme.highlights.normal, theme.highlights.separator) .. config.user.symbols.separators[2] .. string.format("%%#%s# ", theme.highlights.normal) end
+    if i < #entries then entries_str = entries_str .. string.format("%%#%s# %%#%s#", theme.highlights.normal, theme.highlights.separator) .. config.user.symbols.separator .. string.format("%%#%s# ", theme.highlights.normal) end
   end
 
   return string.format("%%#%s#%s%s%%#%s#%%=%%#%s#%s", theme.highlights.normal, lead_custom_section, entries_str, theme.highlights.normal, theme.highlights.normal, custom_section)
@@ -303,6 +324,7 @@ function M.update(winnr)
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     local lead_custom_section, lead_custom_section_length =
       extract_custom_section(
         winnr,
@@ -336,10 +358,15 @@ function M.update(winnr)
 =======
 <<<<<<< HEAD
 >>>>>>> fcf6dc0 (fix(custom_section): evaluate string to calculate length precisely)
+||||||| parent of 4a15252 (merged)
+<<<<<<< HEAD
+=======
+>>>>>>> 4a15252 (merged)
     local lead_custom_section, lead_custom_section_length = extract_custom_section(winnr, config.user.lead_custom_section(bufnr, winnr))
     local custom_section, custom_section_length = extract_custom_section(winnr, config.user.custom_section(bufnr, winnr))
 >>>>>>> 9687462 (merged)
     local entries = create_entries(winnr, bufnr, lead_custom_section_length + custom_section_length)
+<<<<<<< HEAD
 <<<<<<< HEAD
 >>>>>>> f8ca86f (refactoring and adding options)
 ||||||| parent of fcf6dc0 (fix(custom_section): evaluate string to calculate length precisely)
@@ -369,6 +396,33 @@ function M.update(winnr)
     )
 >>>>>>> 59f9656 (fix(custom_section): evaluate string to calculate length precisely)
 >>>>>>> fcf6dc0 (fix(custom_section): evaluate string to calculate length precisely)
+||||||| parent of 4a15252 (merged)
+||||||| parent of 59f9656 (fix(custom_section): evaluate string to calculate length precisely)
+    local lead_custom_section, lead_custom_section_length =
+      extract_custom_section(config.user.lead_custom_section(bufnr, winnr))
+    local custom_section, custom_section_length =
+      extract_custom_section(config.user.custom_section(bufnr, winnr))
+    local entries = create_entries(
+      winnr,
+      bufnr,
+      lead_custom_section_length + custom_section_length
+    )
+=======
+    local lead_custom_section, lead_custom_section_length =
+      extract_custom_section(
+        winnr,
+        config.user.lead_custom_section(bufnr, winnr)
+      )
+    local custom_section, custom_section_length =
+      extract_custom_section(winnr, config.user.custom_section(bufnr, winnr))
+    local entries = create_entries(
+      winnr,
+      bufnr,
+      lead_custom_section_length + custom_section_length
+    )
+>>>>>>> 59f9656 (fix(custom_section): evaluate string to calculate length precisely)
+=======
+>>>>>>> 4a15252 (merged)
     if entries == nil then return end
 
     state:save(entries)
