@@ -29,16 +29,18 @@ local function truncate_entries(entries, length, max_length, basename_position)
 
     length = length - entries[i]:len()
     if has_ellipsis then
-      if i < #entries then length = length - (vim.api.nvim_eval_statusline(config.user.symbols.separator, {
-        use_winbar = true,
-      }).width + 2) end
+      if i < #entries then
+        length = length
+          - (
+            vim.api.nvim_eval_statusline(config.user.symbols.separator, {
+              use_winbar = true,
+            }).width + 2
+          )
+      end
 
       table.remove(entries, i)
       n = n + 1
     else
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
       length = length
         + vim.api.nvim_eval_statusline(config.user.symbols.ellipsis, {
           use_winbar = true,
@@ -47,133 +49,6 @@ local function truncate_entries(entries, length, max_length, basename_position)
         config.user.symbols.ellipsis,
         highlight = theme.highlights.ellipsis,
       })
-<<<<<<< HEAD
-||||||| parent of 5975a2d (fix(utils): remove `str_len` and use `nvim_eval_statusline` instead)
-      length = length + utils.str_len(config.user.symbols.ellipsis)
-      entries[i] = ENTRY_ELLIPSIS
-=======
-      length = length
-        + vim.api.nvim_eval_statusline(config.user.symbols.ellipsis, {
-          use_winbar = true,
-        }).width
-<<<<<<< HEAD
-      entries[i] = ENTRY_ELLIPSIS
->>>>>>> 5975a2d (fix(utils): remove `str_len` and use `nvim_eval_statusline` instead)
-||||||| parent of ac2272e (fix(ui): create ellipsis entry every time to respect user config)
-      entries[i] = ENTRY_ELLIPSIS
-=======
-      entries[i] = Entry.new({
-        config.user.symbols.ellipsis,
-        highlight = theme.highlights.ellipsis,
-      })
->>>>>>> ac2272e (fix(ui): create ellipsis entry every time to respect user config)
-||||||| parent of 89817d7 (merged)
-=======
-||||||| parent of 9687462 (merged)
-      length = length + utils.str_len(config.user.symbols.ellipsis)
-      entries[i] = ENTRY_ELLIPSIS
-=======
-||||||| parent of 5998af9 (fix(utils): remove `str_len` and use `nvim_eval_statusline` instead)
-=======
-<<<<<<< HEAD
->>>>>>> 5998af9 (fix(utils): remove `str_len` and use `nvim_eval_statusline` instead)
-||||||| parent of c61c60f (refactoring and adding options)
-<<<<<<< HEAD
-<<<<<<< HEAD
-      length = length
-        + vim.api.nvim_eval_statusline(config.user.symbols.ellipsis, {
-          use_winbar = true,
-        }).width
-      entries[i] = Entry.new({
-        config.user.symbols.ellipsis,
-        highlight = theme.highlights.ellipsis,
-      })
-||||||| parent of 9687462 (merged)
-      length = length + utils.str_len(config.user.symbols.ellipsis)
-      entries[i] = ENTRY_ELLIPSIS
-=======
-||||||| parent of 5998af9 (fix(utils): remove `str_len` and use `nvim_eval_statusline` instead)
-=======
-<<<<<<< HEAD
->>>>>>> 5998af9 (fix(utils): remove `str_len` and use `nvim_eval_statusline` instead)
-=======
->>>>>>> c61c60f (refactoring and adding options)
-      length = length + vim.api.nvim_eval_statusline(config.user.symbols.ellipsis, {
-        use_winbar = true,
-      }).width
-      entries[i] = Entry.new({
-        config.user.symbols.ellipsis,
-        highlight = theme.highlights.ellipsis,
-      })
-<<<<<<< HEAD
-<<<<<<< HEAD
->>>>>>> 9687462 (merged)
-<<<<<<< HEAD
->>>>>>> 89817d7 (merged)
-||||||| parent of b977784 (fix(utils): remove `str_len` and use `nvim_eval_statusline` instead)
-=======
-||||||| parent of 5998af9 (fix(utils): remove `str_len` and use `nvim_eval_statusline` instead)
-=======
-||||||| parent of 5975a2d (fix(utils): remove `str_len` and use `nvim_eval_statusline` instead)
-      length = length + utils.str_len(config.user.symbols.ellipsis)
-      entries[i] = ENTRY_ELLIPSIS
-=======
-      length = length
-        + vim.api.nvim_eval_statusline(config.user.symbols.ellipsis, {
-          use_winbar = true,
-        }).width
-<<<<<<< HEAD
-      entries[i] = ENTRY_ELLIPSIS
->>>>>>> 5975a2d (fix(utils): remove `str_len` and use `nvim_eval_statusline` instead)
-<<<<<<< HEAD
->>>>>>> 5998af9 (fix(utils): remove `str_len` and use `nvim_eval_statusline` instead)
-<<<<<<< HEAD
->>>>>>> b977784 (fix(utils): remove `str_len` and use `nvim_eval_statusline` instead)
-||||||| parent of 8afff87 (fix(ui): create ellipsis entry every time to respect user config)
-=======
-||||||| parent of 046cf2b (fix(ui): create ellipsis entry every time to respect user config)
-=======
-||||||| parent of ac2272e (fix(ui): create ellipsis entry every time to respect user config)
-      entries[i] = ENTRY_ELLIPSIS
-=======
-      entries[i] = Entry.new({
-        config.user.symbols.ellipsis,
-        highlight = theme.highlights.ellipsis,
-      })
->>>>>>> ac2272e (fix(ui): create ellipsis entry every time to respect user config)
->>>>>>> 046cf2b (fix(ui): create ellipsis entry every time to respect user config)
->>>>>>> 8afff87 (fix(ui): create ellipsis entry every time to respect user config)
-||||||| parent of c61c60f (refactoring and adding options)
-<<<<<<< HEAD
->>>>>>> 9687462 (merged)
-||||||| parent of 5998af9 (fix(utils): remove `str_len` and use `nvim_eval_statusline` instead)
-=======
-||||||| parent of 5975a2d (fix(utils): remove `str_len` and use `nvim_eval_statusline` instead)
-      length = length + utils.str_len(config.user.symbols.ellipsis)
-      entries[i] = ENTRY_ELLIPSIS
-=======
-      length = length
-        + vim.api.nvim_eval_statusline(config.user.symbols.ellipsis, {
-          use_winbar = true,
-        }).width
-<<<<<<< HEAD
-      entries[i] = ENTRY_ELLIPSIS
->>>>>>> 5975a2d (fix(utils): remove `str_len` and use `nvim_eval_statusline` instead)
-<<<<<<< HEAD
->>>>>>> 5998af9 (fix(utils): remove `str_len` and use `nvim_eval_statusline` instead)
-||||||| parent of 046cf2b (fix(ui): create ellipsis entry every time to respect user config)
-=======
-||||||| parent of ac2272e (fix(ui): create ellipsis entry every time to respect user config)
-      entries[i] = ENTRY_ELLIPSIS
-=======
-      entries[i] = Entry.new({
-        config.user.symbols.ellipsis,
-        highlight = theme.highlights.ellipsis,
-      })
->>>>>>> ac2272e (fix(ui): create ellipsis entry every time to respect user config)
->>>>>>> 046cf2b (fix(ui): create ellipsis entry every time to respect user config)
-=======
->>>>>>> c61c60f (refactoring and adding options)
 
       has_ellipsis = true
       i = i + 1 -- manually increment i when not removing anything from entries
@@ -201,12 +76,15 @@ local function extract_custom_section(winnr, custom_section)
     content = custom_section
   elseif type(custom_section) == "table" then
     for _, part in ipairs(custom_section) do
-      length = length + vim.api.nvim_eval_statusline(part[1], {
-        use_winbar = true,
-        winid = winnr,
-      }).width
+      length = length
+        + vim.api.nvim_eval_statusline(part[1], {
+          use_winbar = true,
+          winid = winnr,
+        }).width
 
-      if part[2] ~= nil then content = content .. string.format("%%#%s#", part[2]) end
+      if part[2] ~= nil then
+        content = content .. string.format("%%#%s#", part[2])
+      end
       content = content .. part[1]
     end
   end
@@ -235,12 +113,21 @@ local function create_entries(winnr, bufnr, extra_length)
   local length = extra_length
   for i, entry in ipairs(entries) do
     length = length + entry:len()
-    if i < #entries then length = length + vim.api.nvim_eval_statusline(config.user.symbols.separator, {
-      use_winbar = true,
-      winid = winnr,
-    }).width + 2 end
+    if i < #entries then
+      length = length
+        + vim.api.nvim_eval_statusline(config.user.symbols.separator, {
+          use_winbar = true,
+          winid = winnr,
+        }).width
+        + 2
+    end
   end
-  truncate_entries(entries, length, vim.api.nvim_win_get_width(winnr), #dirname + 1)
+  truncate_entries(
+    entries,
+    length,
+    vim.api.nvim_win_get_width(winnr),
+    #dirname + 1
+  )
 
   return entries
 end
@@ -255,10 +142,27 @@ local function build_winbar(entries, lead_custom_section, custom_section)
   local entries_str = ""
   for i, entry in ipairs(entries) do
     entries_str = entries_str .. entry:to_string()
-    if i < #entries then entries_str = entries_str .. string.format("%%#%s# %%#%s#", theme.highlights.normal, theme.highlights.separator) .. config.user.symbols.separator .. string.format("%%#%s# ", theme.highlights.normal) end
+    if i < #entries then
+      entries_str = entries_str
+        .. string.format(
+          "%%#%s# %%#%s#",
+          theme.highlights.normal,
+          theme.highlights.separator
+        )
+        .. config.user.symbols.separator
+        .. string.format("%%#%s# ", theme.highlights.normal)
+    end
   end
 
-  return string.format("%%#%s#%s%s%%#%s#%%=%%#%s#%s", theme.highlights.normal, lead_custom_section, entries_str, theme.highlights.normal, theme.highlights.normal, custom_section)
+  return string.format(
+    "%%#%s#%s%s%%#%s#%%=%%#%s#%s",
+    theme.highlights.normal,
+    lead_custom_section,
+    entries_str,
+    theme.highlights.normal,
+    theme.highlights.normal,
+    custom_section
+  )
 end
 
 ---Gathers up-to-date data and updates the winbar unless the window or the
@@ -271,7 +175,16 @@ function M.update(winnr)
   local bufnr = vim.api.nvim_win_get_buf(winnr)
   local state = State.new(winnr)
 
-  if not vim.tbl_contains(config.user.include_buftypes, vim.bo[bufnr].buftype) or vim.tbl_contains(config.user.exclude_filetypes, vim.bo[bufnr].filetype) or vim.api.nvim_win_get_config(winnr).relative ~= "" or (not config.user.show_dirname and not config.user.show_basename and vim.b[bufnr].navic_client_id == nil) then
+  if
+    not vim.tbl_contains(config.user.include_buftypes, vim.bo[bufnr].buftype)
+    or vim.tbl_contains(config.user.exclude_filetypes, vim.bo[bufnr].filetype)
+    or vim.api.nvim_win_get_config(winnr).relative ~= ""
+    or (
+      not config.user.show_dirname
+      and not config.user.show_basename
+      and vim.b[bufnr].navic_client_id == nil
+    )
+  then
     local last_winbar = state:get_last_winbar()
     if last_winbar ~= nil then
       -- HACK: this exists because of Vim:E36 error. See neovim/neovim#19464
@@ -288,15 +201,31 @@ function M.update(winnr)
   end
 
   vim.schedule(function()
-    if not vim.api.nvim_buf_is_valid(bufnr) or not vim.api.nvim_win_is_valid(winnr) or bufnr ~= vim.api.nvim_win_get_buf(winnr) then return end
+    if
+      not vim.api.nvim_buf_is_valid(bufnr)
+      or not vim.api.nvim_win_is_valid(winnr)
+      or bufnr ~= vim.api.nvim_win_get_buf(winnr)
+    then
+      return
+    end
 
-    local lead_custom_section, lead_custom_section_length = extract_custom_section(winnr, config.user.lead_custom_section(bufnr, winnr))
-    local custom_section, custom_section_length = extract_custom_section(winnr, config.user.custom_section(bufnr, winnr))
-    local entries = create_entries(winnr, bufnr, lead_custom_section_length + custom_section_length)
+    local lead_custom_section, lead_custom_section_length =
+      extract_custom_section(
+        winnr,
+        config.user.lead_custom_section(bufnr, winnr)
+      )
+    local custom_section, custom_section_length =
+      extract_custom_section(winnr, config.user.custom_section(bufnr, winnr))
+    local entries = create_entries(
+      winnr,
+      bufnr,
+      lead_custom_section_length + custom_section_length
+    )
     if entries == nil then return end
 
     state:save(entries)
-    vim.wo[winnr].winbar = build_winbar(entries, lead_custom_section, custom_section)
+    vim.wo[winnr].winbar =
+      build_winbar(entries, lead_custom_section, custom_section)
   end)
 end
 
@@ -324,8 +253,13 @@ function M.navigate(index, winnr)
   if entries == nil then return end
 
   ---@type barbecue.Entry[]
-  local clickable_entries = vim.tbl_filter(function(entry) return entry.to ~= nil end, entries)
-  if index < -#clickable_entries or index > #clickable_entries then error("index out of range", 2) end
+  local clickable_entries = vim.tbl_filter(
+    function(entry) return entry.to ~= nil end,
+    entries
+  )
+  if index < -#clickable_entries or index > #clickable_entries then
+    error("index out of range", 2)
+  end
 
   if index < 0 then index = #clickable_entries + index + 1 end
   local clickable_entry = Entry.from(clickable_entries[index])
