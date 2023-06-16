@@ -32,7 +32,7 @@ local function truncate_entries(entries, length, max_length, basename_position)
       if i < #entries then
         length = length
           - (
-            vim.api.nvim_eval_statusline(config.user.symbols.separator, {
+            vim.api.nvim_eval_statusline(config.user.symbols.separators[1], {
               use_winbar = true,
             }).width + 2
           )
@@ -115,7 +115,7 @@ local function create_entries(winnr, bufnr, extra_length)
     length = length + entry:len()
     if i < #entries then
       length = length
-        + vim.api.nvim_eval_statusline(config.user.symbols.separator, {
+        + vim.api.nvim_eval_statusline(config.user.symbols.separators[2], {
           use_winbar = true,
           winid = winnr,
         }).width
@@ -149,7 +149,7 @@ local function build_winbar(entries, lead_custom_section, custom_section)
           theme.highlights.normal,
           theme.highlights.separator
         )
-        .. config.user.symbols.separator
+        .. config.user.symbols.separators[2]
         .. string.format("%%#%s# ", theme.highlights.normal)
     end
   end
@@ -177,6 +177,7 @@ function M.update(winnr)
 
   if
     not vim.tbl_contains(config.user.include_buftypes, vim.bo[bufnr].buftype)
+    or vim.tbl_contains(config.user.exclude_buftypes, vim.bo[bufnr].buftype)
     or vim.tbl_contains(config.user.exclude_filetypes, vim.bo[bufnr].filetype)
     or vim.api.nvim_win_get_config(winnr).relative ~= ""
     or (

@@ -15,6 +15,10 @@ local M = {
   ---@type string[]
   include_buftypes = { "" },
 
+  ---Buftypes not to enable winbar in.
+  ---
+  ---@type string[]
+  exclude_buftypes = { "nofile" },
   ---Filetypes not to enable winbar in.
   ---
   ---@type string[]
